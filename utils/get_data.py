@@ -25,6 +25,15 @@ def get_bot_token() -> str:
     return token
 
 
+def get_admin() -> str:
+    admin_id = os.environ.get("ADMIN_ID")
+    if not admin_id:
+        logging.error("Ошибка: Переменная окружения ADMIN_ID не задана.")
+        return None 
+
+    return admin_id
+
+
 def update_config_file(token: str=None, host: str=None, port: int=None, database: str=None, user: str=None, password: str=None):
     config_data = {"bot_token": token}
 
