@@ -125,3 +125,24 @@ async def add_app(user_id: int,
     finally:
         if db.connection:
             await db.close()
+            
+            
+async def get_all_apps():    
+    db = DataBase()
+    
+    try:
+        if not await db.connect():
+            logger.error("Не удалось подключиться к базе данных.")
+            return
+
+        all_apps = await db.fetch(
+            """SELECT * FROM applications;"""
+        )
+        
+        return all_apps
+
+    except Exception as e:
+        logger.exception(f"Ошибка при работе с базой данных: {e}")
+    finally:
+        if db.connection:
+            await db.close()

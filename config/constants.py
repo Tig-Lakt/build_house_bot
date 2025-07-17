@@ -4,7 +4,7 @@ from utils import (
     get_bot_token, 
     get_db_connection_params, 
     update_config_file,
-    get_admin,
+    get_channel_id,
 )
 
 
@@ -18,4 +18,6 @@ TOKEN = get_bot_token()
 
 DB_CONN = get_db_connection_params()
 
-ADMIN_ID = get_admin()
+CHANNEL_ID = get_channel_id()
+
+FILE_PATH = os.path.join(PROJECT_PATH, "data", "apps.xlsx") 

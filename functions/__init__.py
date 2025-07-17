@@ -1,1 +1,2 @@
 from functions.check_phone_format import is_valid_format_phone
+from functions.get_app_file import get_all_apps_file

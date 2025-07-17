@@ -1,2 +1,5 @@
-from handlers import commands_handler
-from handlers import users_handler 
+from handlers import (
+    commands_handler,
+    users_handler,
+    file_handler,
+)

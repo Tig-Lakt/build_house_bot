@@ -8,7 +8,7 @@ from resources import *
 from functions import is_valid_format_phone
 from config import (
     TOKEN,
-    ADMIN_ID,
+    CHANNEL_ID, 
 )
 
 bot = Bot(token=TOKEN)
@@ -26,6 +26,7 @@ async def go_back(callback: types.CallbackQuery, state: FSMContext, previous_sta
     )
     await state.set_state(previous_state)
 
+
 @router.callback_query(F.data == "begin")
 async def f_begin(callback: types.CallbackQuery, state: FSMContext):
     try:
@@ -37,6 +38,7 @@ async def f_begin(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=housetype_inline_kb.as_markup(resize_keyboard=True)
     )
     await state.set_state(UserData.housetype)
+    
     
 @router.callback_query(F.data.startswith('housetype_'))
 async def f_input_housetype(callback: types.CallbackQuery, state: FSMContext):
@@ -67,6 +69,7 @@ async def f_input_housetype(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=kb.as_markup(resize_keyboard=True)
     )
 
+
 @router.callback_query(F.data.startswith('stephousetype_'))
 async def f_stephousetype(callback: types.CallbackQuery, state: FSMContext):
     try:
@@ -81,6 +84,7 @@ async def f_stephousetype(callback: types.CallbackQuery, state: FSMContext):
             reply_markup=area_step_kb.as_markup(resize_keyboard=True)
         )
         await state.set_state(UserData.area)
+
 
 @router.callback_query(F.data.startswith('area_'))
 async def f_input_area(callback: types.CallbackQuery, state: FSMContext):
@@ -99,6 +103,7 @@ async def f_input_area(callback: types.CallbackQuery, state: FSMContext):
     )
     await state.set_state(UserData.plot)
     
+    
 @router.callback_query(F.data.startswith('plot_'))
 async def f_input_plot(callback: types.CallbackQuery, state: FSMContext):
     if callback.data[5:] == 'back':
@@ -115,6 +120,7 @@ async def f_input_plot(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=budget_step_kb.as_markup(resize_keyboard=True)
     )
     await state.set_state(UserData.budget)
+    
     
 @router.callback_query(F.data.startswith('budget_'))
 async def f_input_budget(callback: types.CallbackQuery, state: FSMContext):
@@ -133,6 +139,7 @@ async def f_input_budget(callback: types.CallbackQuery, state: FSMContext):
     )
     await state.set_state(UserData.start_date)
     
+    
 @router.callback_query(F.data.startswith('start_date_'))
 async def f_input_start_date(callback: types.CallbackQuery, state: FSMContext):
     if callback.data[11:] == 'back':
@@ -149,6 +156,7 @@ async def f_input_start_date(callback: types.CallbackQuery, state: FSMContext):
         reply_markup=comment_step_kb.as_markup(resize_keyboard=True)
     )
     await state.set_state(UserData.comment)
+    
     
 @router.callback_query(F.data.startswith('comment_'))
 async def f_comment(callback: types.CallbackQuery, state: FSMContext):
@@ -168,11 +176,13 @@ async def f_comment(callback: types.CallbackQuery, state: FSMContext):
         await callback.message.answer(text=comment_add_text)
         await state.set_state(UserData.comment)
 
+
 @router.message(UserData.comment)
 async def f_input_comment(message: types.Message, state: FSMContext):
     await state.update_data(comment=message.text)
     await message.answer(contacts_text)
     await state.set_state(UserData.phone)
+    
     
 @router.message(UserData.phone)
 async def f_input_phone(message: types.Message, state: FSMContext):
@@ -192,6 +202,7 @@ async def f_input_phone(message: types.Message, state: FSMContext):
     else:
         await message.answer(contacts_error_text)
         await state.set_state(UserData.phone)
+        
         
 @router.message(UserData.name)
 async def f_input_name(message: types.Message, state: FSMContext):
@@ -219,10 +230,11 @@ async def f_input_name(message: types.Message, state: FSMContext):
     await add_app(user_id, housetype, int(area), int(plot), int(budget), int(start_date), comment, phone, name)
     
     await bot.send_message(
-        chat_id=ADMIN_ID,
+        chat_id=CHANNEL_ID,
         text=f"""Поступила новая заявка от:
 USER_ID: {user_id}, 
-Имя: {name}"""    
+Имя: {name}""",
+        reply_markup=get_file_kb.as_markup(resize_keyboard=True) 
     )
     
     await state.clear()

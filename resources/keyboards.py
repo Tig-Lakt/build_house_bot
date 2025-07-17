@@ -153,3 +153,14 @@ comment_btns = [
 comment_step_kb = InlineKeyboardBuilder()
 comment_step_kb.add(*comment_btns)
 comment_step_kb.adjust(2)
+
+###################################################################################################
+btn_get_file = InlineKeyboardButton(text='🔘 Получить файл', callback_data='get_file')
+
+get_file_btns = [
+    btn_get_file,
+]
+
+get_file_kb = InlineKeyboardBuilder()
+get_file_kb.add(*get_file_btns)
+get_file_kb.adjust(2)

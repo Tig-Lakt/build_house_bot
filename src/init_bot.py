@@ -15,6 +15,7 @@ from config import TOKEN
 from handlers import (
     commands_handler,
     users_handler,
+    file_handler,
 )
 from models import create_models
 
@@ -30,6 +31,7 @@ async def main():
     dp.include_routers(
         commands_handler.router,
         users_handler.router,
+        file_handler.router,
     )
 
     await create_models()
