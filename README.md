@@ -5,7 +5,7 @@ DB_PORT = 'DB_PORT'
 DB_NAME = 'DB_NAME'  
 DB_USER = 'DB_USER'
 DB_PASSWORD = 'DB_PASSWORD'  
-ADMIN_ID = 'ADMIN_TELEGRAM_ID'
+CHANNEL_ID = 'CHANNEL_TELEGRAM_ID'  
 
 Для запуска бота необходимо внести переменные окружения для подключения к базе данных, и указать токен телеграм бота.  
 На сервере бота можно запустить командой docker-compose up -d из папки проекта.
